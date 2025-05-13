@@ -33,9 +33,14 @@ npm install
 
 PORT=3000
 
-## Ejecución del Backend
+## Ejecución
+
 Para iniciar el servidor:
 
 npm start
 
-## Ver el Frontend
+Visitar http://localhost:3000/
+
+
+
+
