@@ -22,7 +22,7 @@ git clone https://github.com/nika-developer/Prueba-Tecnica.git
 
 2. Entra en la carpeta del proyecto:
 
-cd Prueba-Tecnica}
+cd Prueba-Tecnica
 
 3. Instala las dependencias:
 
