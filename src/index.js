@@ -1,31 +1,34 @@
-// Se importa la dependecia de express para mejorar la creacion de rutas
 import express from "express";
-// Se importa la dependecia de morgan para mejorar la visualizacion de las peticiones
+import path from "path";
 import morgan from "morgan";
-// Se importa la dependecia de cors para mejorar la seguridad de las peticiones
 import cors from "cors";
-// Se importa la dependecia de dotenv para manejar variables de entorno
 import env from "./config.js";
 import productRoutes from "./routes/product.routes.js";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
-//Se crea una variable para el puerto del servidor que viene desde el archivo .env y si no existe se le asigna el valor 3000 por defecto
+// Obtener __dirname en ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Se crea una variable para el puerto del servidor
 const port = env.port ?? 3000;
 
 const app = express();
 
-//Middlewares necesarios para el funcionamiento de la API REST
-
-//Se usa este middleware para mejorar la seguridad de las peticiones
+// Middlewares necesarios para el funcionamiento de la API REST
 app.use(cors());
-
-//Se usa este middleware para mejorar la visualizacion de las peticiones en la consola
 app.use(morgan("dev"));
-
-//Se usa este middleware para que el servidor pueda recibir datos en formato JSON
 app.use(express.json());
+
+// Servir archivos estáticos desde la carpeta 'public'
+app.use(express.static(path.join(__dirname, "public")));
+
+// Ruta principal para servir 'index.html'
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 app.use(productRoutes);
 
-app.listen(port, () =>
-    console.log(`Server is running on port ${port}`)
-);
+app.listen(port, () => console.log(`Server is running on port ${port}`));
